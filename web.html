@@ -34,7 +34,7 @@
             color: var(--text);
             font-family: 'Syne', sans-serif;
             overflow-x: hidden;
-            cursor: none;
+            cursor: auto;
         }
         /* CUSTOM CURSOR */
         
@@ -143,6 +143,7 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             transition: all 0.3s;
+            cursor: pointer;
         }
         
         .nav-cta:hover {
@@ -309,7 +310,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             text-decoration: none;
-            cursor: none;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -338,7 +339,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             text-decoration: none;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s;
             background: transparent;
         }
@@ -582,6 +583,10 @@
             font-weight: 600;
             letter-spacing: 0.05em;
             transition: gap 0.3s;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+            pointer-events: all;
         }
         
         .project-link:hover {
@@ -1332,6 +1337,8 @@
         // 3D TILT
         document.querySelectorAll('.tilt').forEach(card => {
             card.addEventListener('mousemove', e => {
+                // Don't apply tilt if hovering over a link
+                if (e.target.closest('a')) return;
                 const r = card.getBoundingClientRect();
                 const x = e.clientX - r.left,
                     y = e.clientY - r.top;
@@ -1347,6 +1354,10 @@
             });
             card.addEventListener('mouseenter', () => {
                 card.style.transition = 'transform 0.1s ease';
+            });
+            // Reset tilt on click so link works
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
             });
         });
 
